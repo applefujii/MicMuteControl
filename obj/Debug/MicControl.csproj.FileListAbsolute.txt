@@ -1,0 +1,50 @@
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\AboutWindow.g.cs
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\App.g.cs
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\MainWindow.g.cs
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\SettingWindow.g.cs
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\MicControl_MarkupCompile.cache
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\MicControl_MarkupCompile.lref
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\bin\Debug\MicControl.exe.config
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\bin\Debug\MicControl.exe
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\bin\Debug\MicControl.pdb
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\bin\Debug\AudioSwitcher.AudioApi.CoreAudio.dll
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\bin\Debug\AudioSwitcher.AudioApi.dll
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\MicControl.csprojAssemblyReference.cache
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\AboutWindow.baml
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\MainWindow.baml
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\SettingWindow.baml
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\MicControl.g.resources
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\MicControl.Properties.Resources.resources
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\MicControl.csproj.GenerateResource.cache
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\MicControl.csproj.CoreCompileInputs.cache
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\MicControl.csproj.CopyComplete
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\MicControl.exe
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\MicControl.pdb
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\OverlayWindow.g.cs
+C:\Users\apple_umeda\Desktop\藤井 淳一\コード\C#\MicControl\obj\Debug\OverlayWindow.baml
+D:\DataFiles\Programing\MicControl\obj\Debug\MicControl.csproj.AssemblyReference.cache
+D:\DataFiles\Programing\MicControl\obj\Debug\MicControl.csproj.SuggestedBindingRedirects.cache
+D:\DataFiles\Programing\MicControl\obj\Debug\AboutWindow.g.cs
+D:\DataFiles\Programing\MicControl\obj\Debug\App.g.cs
+D:\DataFiles\Programing\MicControl\obj\Debug\MainWindow.g.cs
+D:\DataFiles\Programing\MicControl\obj\Debug\OverlayWindow.g.cs
+D:\DataFiles\Programing\MicControl\obj\Debug\SettingWindow.g.cs
+D:\DataFiles\Programing\MicControl\bin\Debug\AudioSwitcher.AudioApi.CoreAudio.dll
+D:\DataFiles\Programing\MicControl\bin\Debug\AudioSwitcher.AudioApi.dll
+D:\DataFiles\Programing\MicControl\obj\Debug\AboutWindow.baml
+D:\DataFiles\Programing\MicControl\obj\Debug\App.baml
+D:\DataFiles\Programing\MicControl\obj\Debug\MainWindow.baml
+D:\DataFiles\Programing\MicControl\obj\Debug\OverlayWindow.baml
+D:\DataFiles\Programing\MicControl\obj\Debug\SettingWindow.baml
+D:\DataFiles\Programing\MicControl\obj\Debug\MicControl.Properties.Resources.resources
+D:\DataFiles\Programing\MicControl\obj\Debug\MicControl.csproj.GenerateResource.cache
+D:\DataFiles\Programing\MicControl\obj\Debug\MicControl.csproj.CoreCompileInputs.cache
+D:\DataFiles\Programing\MicControl\obj\Debug\MicControl.csproj.CopyComplete
+D:\DataFiles\Programing\MicControl\bin\Debug\MicMuteControl.exe.config
+D:\DataFiles\Programing\MicControl\bin\Debug\MicMuteControl.exe
+D:\DataFiles\Programing\MicControl\bin\Debug\MicMuteControl.pdb
+D:\DataFiles\Programing\MicControl\obj\Debug\MicMuteControl_MarkupCompile.cache
+D:\DataFiles\Programing\MicControl\obj\Debug\MicMuteControl_MarkupCompile.lref
+D:\DataFiles\Programing\MicControl\obj\Debug\MicMuteControl.g.resources
+D:\DataFiles\Programing\MicControl\obj\Debug\MicMuteControl.exe
+D:\DataFiles\Programing\MicControl\obj\Debug\MicMuteControl.pdb

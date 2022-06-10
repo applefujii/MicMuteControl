@@ -1,0 +1,37 @@
+﻿<Window x:Class="MicControl.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MicControl"
+        mc:Ignorable="d"
+        Title="About" Height="243.4" Width="320" ResizeMode="NoResize">
+    <Grid>
+        <RichTextBox HorizontalAlignment="Left" Height="186" Margin="10,10,0,0" VerticalAlignment="Top" Width="286" IsReadOnly="True">
+            <FlowDocument>
+                <Paragraph LineHeight="6">
+                    <Run Text="【"/>
+                    <Run Text="バージョン"/>
+                    <Run Text="】"/>
+                </Paragraph>
+                <Paragraph LineHeight="6">
+                    <Run Text="1.0.0"/>
+                </Paragraph>
+                <Paragraph LineHeight="6">
+                    <Run Text="updated by 2021/06/09"/>
+                </Paragraph>
+                <Paragraph LineHeight="6">
+                    <Run Text="released by 2021/06/09"/>
+                </Paragraph>
+                <Paragraph LineHeight="6">
+                    <Run Text="【"/>
+                    <Run Text="ホームページ"/>
+                    <Run Text="】"/>
+                </Paragraph>
+                <Paragraph LineHeight="6">
+                    <Run Text="https://snowrabbit.sakura.ne.jp/software/"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+    </Grid>
+</Window>
