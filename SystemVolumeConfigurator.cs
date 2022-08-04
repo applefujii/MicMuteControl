@@ -38,7 +38,7 @@ namespace MicControl
 
         public void RefleshCaptureDevice()
         {
-            //System.Threading.Thread.Sleep(3000);
+            //System.Threading.Thread.Sleep(5000);
             //サウンドの既定の録音デバイスを取得
             defaultCaptureDevice = new CoreAudioController().DefaultCaptureDevice;
             //サウンドの録音一覧を取得

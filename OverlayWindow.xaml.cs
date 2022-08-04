@@ -32,13 +32,13 @@ namespace MicControl
         }
 
 
-        private async void DoubleClick_HiddenShortTime(object sender, MouseButtonEventArgs e)
+        private void DoubleClick_HiddenShortTime(object sender, MouseButtonEventArgs e)
         {
             if (cancelTokenSource != null) cancelTokenSource.Dispose();
             cancelTokenSource = new CancellationTokenSource();
             mainWindow.setCancellationTokenSource(cancelTokenSource);
             CancellationToken cancelToken = cancelTokenSource.Token;
-            await HiddenShortTime(cancelToken);
+            _ = HiddenShortTime(cancelToken);
         }
 
 

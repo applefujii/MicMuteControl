@@ -78,8 +78,8 @@ namespace MicControl
             this.IsEnabled = false;
             ini = new IniManager("./setting.ini");
             lHotkey = new List<Hotkey>();
-            Application.UseWaitCursor = true;
-            Application.DoEvents();
+            //Application.UseWaitCursor = true;
+            //Application.DoEvents();
         }
 
         /** 初期化(ウィンドウ描画後) */
@@ -94,9 +94,10 @@ namespace MicControl
             source.AddHook(new HwndSourceHook(WndProc));
         }
 
-        private void Initialize()
+        private async void Initialize()
         {
-            _ = InitializeAsync();
+            // 非同期処理の開始
+            Task init = InitializeAsync();
 
             DeleteOldFiles();
 
@@ -163,18 +164,28 @@ namespace MicControl
             isGamingMode = ini.ReadValueBoolean("action_mode", "gaming_mode");
             if(isGamingMode) this.gamingMode.IsChecked = true;
             ModeChangeFlush();
+
+            // 非同期処理終了を待つ
+            //Debug.WriteLine(Thread.CurrentThread.ManagedThreadId + "非同期処理終了before");
+            await init;
+            //Debug.WriteLine(Thread.CurrentThread.ManagedThreadId + "非同期処理終了after");
+
+            //Application.UseWaitCursor = false;
+            //Application.DoEvents();
+            this.IsEnabled = true;
         }
 
         private async Task InitializeAsync()
         {
             //-- 非同期処理
-            await Task.Run<bool>(() =>
+            await Task.Run(() =>
             {
                 mic = new SystemVolumeConfigurator();
-                return true;
+                //Debug.WriteLine(Thread.CurrentThread.ManagedThreadId + "非同期処理終了");
             });
 
-            //-- 非同期処理終了後 (録音デバイス読み込み後)
+            //---- 非同期処理終了後 (録音デバイス読み込み後)
+
             String iniDefDev = ini.ReadValue("device", "default");
             captureDevices.ItemsSource = mic.getCaptureDevices();
             captureDevices.SelectedItem = iniDefDev;
@@ -190,10 +201,6 @@ namespace MicControl
             triggerKey = ini.ReadValue("hotkey", "trigger_key");
             KeysConverter con = new KeysConverter();
             HotKeyRegistration(modKey, triggerKey);
-
-            Application.UseWaitCursor= false;
-            Application.DoEvents();
-            this.IsEnabled = true;
 
             ((ToolStripMenuItem)tray.ContextMenuStrip.Items.Find("trayMenu_Mode", true)[0]).Enabled = true;
             ((ToolStripMenuItem)tray.ContextMenuStrip.Items.Find("trayMenu_OverlayToggle", true)[0]).Enabled = true;
@@ -232,7 +239,7 @@ namespace MicControl
         public void Win_Closing(object sender, CancelEventArgs e)
         {
             overlayWindow.Close();
-            HotKeyDispose();
+            HotkeyDispose();
             tray.Dispose();
         }
 
@@ -258,14 +265,14 @@ namespace MicControl
         /** メニュー ファイル/リフレッシュ */
         public async void Menu_RefleshCaptureDevice(object sender, RoutedEventArgs e)
         {
-            Application.UseWaitCursor = true;
-            Application.DoEvents();
+            //Application.UseWaitCursor = true;
+            //Application.DoEvents();
             this.IsEnabled = false;
 
             await mic.RefleshCaptureDeviceAsync();
 
-            Application.UseWaitCursor = false;
-            Application.DoEvents();
+            //Application.UseWaitCursor = false;
+            //Application.DoEvents();
             this.IsEnabled = true;
         }
 
@@ -611,7 +618,7 @@ namespace MicControl
 
 
 
-        public void HotKeyRegistration()
+        public void HotkeyRegistration()
         {
             HotKeyRegistration(modKey, triggerKey);
         }
@@ -630,7 +637,7 @@ namespace MicControl
             {
                 return;
             }
-            HotKeyDispose();
+            HotkeyDispose();
             Hotkey hk = new Hotkey(mod, tKey);
             hk.HotKeyPush += new EventHandler(HotKey_Push);
             hk.HotKeyRelease += new EventHandler(HotKey_Release);
@@ -675,7 +682,7 @@ namespace MicControl
             }
         }
 
-        public void HotKeyDispose()
+        public void HotkeyDispose()
         {
             foreach(Hotkey hk in lHotkey)
             {

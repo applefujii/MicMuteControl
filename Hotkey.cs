@@ -4,186 +4,193 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-/// <summary>
-/// グローバルホットキーを登録するクラス。
-/// 使用後は必ずDisposeすること。
-/// </summary>
-public class Hotkey : IDisposable
+
+namespace MicControl
 {
-    HotKeyForm form;
-    Key key;
-    MOD_KEY modKey;
-    /// <summary>
-    /// ホットキーが押されると発生する。
-    /// </summary>
-    public event EventHandler HotKeyPush;
-    public event EventHandler HotKeyRelease;
 
     /// <summary>
-    /// ホットキーを指定して初期化する。
+    /// グローバルホットキーを登録するクラス。
     /// 使用後は必ずDisposeすること。
     /// </summary>
-    /// <param name="modKey">修飾キー</param>
-    /// <param name="key">キー</param>
-    public Hotkey(MOD_KEY modKey, Keys key)
+    public class Hotkey : IDisposable
     {
-        form = new HotKeyForm(modKey, key, RaiseHotKeyPush, RaiseHotKeyRelease);
-        KeyConverter con = new KeyConverter();
-        this.key = (Key)con.ConvertFrom(key.ToString());
-        this.modKey = modKey;
-    }
+        HotKeyForm form;
+        Key key;
+        MOD_KEY modKey;
+        /// <summary>
+        /// ホットキーが押されると発生する。
+        /// </summary>
+        public event EventHandler HotKeyPush;
+        public event EventHandler HotKeyRelease;
 
-    private void RaiseHotKeyPush()
-    {
-        if (HotKeyPush != null)
+        /// <summary>
+        /// ホットキーを指定して初期化する。
+        /// 使用後は必ずDisposeすること。
+        /// </summary>
+        /// <param name="modKey">修飾キー</param>
+        /// <param name="key">キー</param>
+        public Hotkey(MOD_KEY modKey, Keys key)
         {
-            HotKeyPush(this, EventArgs.Empty);
+            form = new HotKeyForm(modKey, key, RaiseHotKeyPush, RaiseHotKeyRelease);
+            KeyConverter con = new KeyConverter();
+            this.key = (Key)con.ConvertFrom(key.ToString());
+            this.modKey = modKey;
         }
-    }
 
-    private void RaiseHotKeyRelease()
-    {
-        if (HotKeyRelease != null)
+        private void RaiseHotKeyPush()
         {
-            HotKeyRelease(this, EventArgs.Empty);
-        }
-    }
-
-    public void Dispose()
-    {
-        form.Close();
-    }
-
-    public Key getKey()
-    {
-        return key;
-    }
-
-    public MOD_KEY getModKey()
-    {
-        return modKey;
-    }
-
-    private class HotKeyForm : Form
-    {
-        KeyState keyState;
-
-        [DllImport("user32.dll")]
-        extern static int RegisterHotKey(IntPtr HWnd, int ID, MOD_KEY MOD_KEY, Keys KEY);
-
-        [DllImport("user32.dll")]
-        extern static int UnregisterHotKey(IntPtr HWnd, int ID);
-
-        // HotKeyのイベントを示すメッセージID
-        const int WM_HOTKEY = 0x0312;
-        int id = -1;
-        ThreadStart procPush;
-
-        public HotKeyForm(MOD_KEY modKey, Keys key, ThreadStart procPush, ThreadStart procRelease)
-        {
-            keyState = new KeyState(key, procRelease);
-            this.procPush = procPush;
-
-            Random rdm = new System.Random();
-            id = rdm.Next(1, 1000);
-            if (RegisterHotKey(this.Handle, id, modKey, key) == 0)
+            if (HotKeyPush != null)
             {
-                System.Windows.MessageBox.Show("ホットキーが登録できませんでした。", "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                throw new Exception("ホットキーが登録できませんでした。");
+                HotKeyPush(this, EventArgs.Empty);
+            }
+        }
+
+        private void RaiseHotKeyRelease()
+        {
+            if (HotKeyRelease != null)
+            {
+                HotKeyRelease(this, EventArgs.Empty);
+            }
+        }
+
+        public void Dispose()
+        {
+            form.Close();
+        }
+
+        public Key getKey()
+        {
+            return key;
+        }
+
+        public MOD_KEY getModKey()
+        {
+            return modKey;
+        }
+
+        private class HotKeyForm : Form
+        {
+            KeyState keyState;
+
+            [DllImport("user32.dll")]
+            extern static int RegisterHotKey(IntPtr HWnd, int ID, MOD_KEY MOD_KEY, Keys KEY);
+
+            [DllImport("user32.dll")]
+            extern static int UnregisterHotKey(IntPtr HWnd, int ID);
+
+            // HotKeyのイベントを示すメッセージID
+            const int WM_HOTKEY = 0x0312;
+            int id = -1;
+            ThreadStart procPush;
+
+            public HotKeyForm(MOD_KEY modKey, Keys key, ThreadStart procPush, ThreadStart procRelease)
+            {
+                keyState = new KeyState(key, procRelease);
+                this.procPush = procPush;
+
+                Random rdm = new System.Random();
+                id = rdm.Next(1, 1000);
+                if (RegisterHotKey(this.Handle, id, modKey, key) == 0)
+                {
+                    System.Windows.MessageBox.Show("ホットキーが登録できませんでした。", "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                    throw new Exception("ホットキーが登録できませんでした。");
+                }
+
+                // ホットキー開放
+                Closed += delegate (object sender, EventArgs e)
+                {
+                    UnregisterHotKey(this.Handle, id);
+                };
+
+                keyState.Surveillance();
             }
 
-            // ホットキー開放
-            Closed += delegate (object sender, EventArgs e) {
-                UnregisterHotKey(this.Handle, id);
-            };
-
-            keyState.Surveillance();
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
-
-            if (m.Msg == WM_HOTKEY)
+            protected override void WndProc(ref Message m)
             {
-                if ((int)m.WParam == id)
+                base.WndProc(ref m);
+
+                if (m.Msg == WM_HOTKEY)
                 {
-                    if (keyState.isFirstPress())
+                    if ((int)m.WParam == id)
                     {
-                        procPush();
-                        keyState.setExecuting(true);
+                        if (keyState.isFirstPress())
+                        {
+                            procPush();
+                            keyState.setExecuting(true);
+                        }
                     }
                 }
             }
-        }
 
 
 
 
-        private class KeyState
-        {
-            //登録したキー
-            Key key;
-            bool state = false;
-            bool executing = false;
-            ThreadStart procRelease;
-
-            public KeyState(Keys key, ThreadStart procRelease)
+            private class KeyState
             {
-                KeyConverter con = new KeyConverter();
-                this.key = (Key)con.ConvertFrom(key.ToString());
-                this.procRelease = procRelease;
-            }
+                //登録したキー
+                Key key;
+                bool state = false;
+                bool executing = false;
+                ThreadStart procRelease;
 
-            public void Surveillance()
-            {
-                System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
-                timer.Interval = new TimeSpan(0, 0, 0, 0, 1);
-                timer.Tick += (sender, e) =>
+                public KeyState(Keys key, ThreadStart procRelease)
+                {
+                    KeyConverter con = new KeyConverter();
+                    this.key = (Key)con.ConvertFrom(key.ToString());
+                    this.procRelease = procRelease;
+                }
+
+                public void Surveillance()
+                {
+                    System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
+                    timer.Interval = new TimeSpan(0, 0, 0, 0, 1);
+                    timer.Tick += (sender, e) =>
+                    {
+                        bool newState = Keyboard.IsKeyDown(key);
+                        if (executing == true && newState == false && state == true)
+                        {
+                            procRelease();
+                            executing = false;
+                        }
+                        state = newState;
+                    };
+                    timer.Start();
+                }
+
+                private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+                {
+                    throw new NotImplementedException();
+                }
+
+                public bool isFirstPress()
                 {
                     bool newState = Keyboard.IsKeyDown(key);
-                    if (executing == true && newState == false && state == true)
+                    if (newState == true && state == false)
                     {
-                        procRelease();
-                        executing = false;
+                        state = true;
+                        return true;
                     }
-                    state = newState;
-                };
-                timer.Start();
-            }
-
-            private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool isFirstPress()
-            {
-                bool newState = Keyboard.IsKeyDown(key);
-                if (newState == true && state == false)
-                {
-                    state = true;
-                    return true;
+                    else return false;
                 }
-                else return false;
-            }
 
-            public void setExecuting( bool state )
-            {
-                executing = state;
-            }
+                public void setExecuting(bool state)
+                {
+                    executing = state;
+                }
 
+            }
         }
     }
-}
 
-/// <summary>
-/// HotKeyクラスの初期化時に指定する修飾キー
-/// </summary>
-public enum MOD_KEY : int
-{
-    NONE = 0x0000,
-    ALT = 0x0001,
-    CONTROL = 0x0002,
-    SHIFT = 0x0004
+    /// <summary>
+    /// HotKeyクラスの初期化時に指定する修飾キー
+    /// </summary>
+    public enum MOD_KEY : int
+    {
+        NONE = 0x0000,
+        ALT = 0x0001,
+        CONTROL = 0x0002,
+        SHIFT = 0x0004
+    }
+
 }

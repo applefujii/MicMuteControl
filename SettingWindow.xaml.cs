@@ -32,7 +32,7 @@ namespace MicControl
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-            mainWindow.HotKeyDispose();
+            mainWindow.HotkeyDispose();
             ini = new IniManager("./setting.ini");
             int modKey = ini.ReadValueInt("hotkey", "modifire_key");
             String triggerKey = ini.ReadValue("hotkey", "trigger_key");
@@ -44,7 +44,7 @@ namespace MicControl
             TextBox_Hotkey.Text = modStr + " + " + triggerKey;
 
             Closed += delegate (object sender, EventArgs e) {
-                mainWindow.HotKeyRegistration();
+                mainWindow.HotkeyRegistration();
             };
         }
 
