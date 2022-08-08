@@ -1,32 +1,21 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.IO.Compression;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Threading;
-using System.Drawing;
-using Microsoft.Win32;
-using Application = System.Windows.Forms.Application;
-using System.Security.Permissions;
 using System.Windows.Interop;
-using System.Text.RegularExpressions;
-using System.IO;
-using System.Diagnostics;
-using System.Net.Http;
-using System.Net;
-using System.IO.Compression;
-using System.Drawing.Imaging;
+using System.Windows.Media.Imaging;
+using Application = System.Windows.Forms.Application;
 
 namespace MicControl
 {
