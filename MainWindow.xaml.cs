@@ -109,6 +109,7 @@ namespace MicControl
             //-- リソース読み込み
             imageUnmuted = new BitmapImage(new Uri(@"image\unmuted"+overlayImageNo+".png", UriKind.Relative));
             imageMuted = new BitmapImage(new Uri(@"image\muted"+ overlayImageNo + ".png", UriKind.Relative));
+            // ※↓を入れておかないとなぜか↑読み込めない
             Console.WriteLine(imageUnmuted.PixelWidth);
             Console.WriteLine(imageMuted.PixelWidth);
             iconUnmuted = ConvertIcon(new Bitmap(@"image\unmuted" + iconImageNo + ".png"));
@@ -153,6 +154,18 @@ namespace MicControl
             isGamingMode = ini.ReadValueBoolean("action_mode", "gaming_mode");
             if(isGamingMode) this.gamingMode.IsChecked = true;
             ModeChangeFlush();
+
+            // アプリを即応答できる状態にしておくための定期実行
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Interval = 300000;    //5分間隔
+            timer.Enabled = true;
+            timer.Tick += new EventHandler((object sender, EventArgs e) => {
+                // ダミー処理
+                #pragma warning disable CS0219 // 変数は割り当てられていますが、その値は使用されていません
+                int _ = 0;
+                #pragma warning restore CS0219 // 変数は割り当てられていますが、その値は使用されていません
+                //System.Diagnostics.Debug.WriteLine("定期実行");
+            });
 
             // 非同期処理終了を待つ
             //Debug.WriteLine(Thread.CurrentThread.ManagedThreadId + "非同期処理終了before");
@@ -416,10 +429,12 @@ namespace MicControl
 
         private void Click_Button_OverrayAdjust(object sender, RoutedEventArgs e)
         {
-            if (overlayWindow.AdjustModeToggle())
+            // 調整モードを抜けた時
+            if (overlayWindow.AdjustModeToggle() == false)
             {
-                System.Windows.Point p = overlayWindow.getPosition();
-                ini.WriteValue("Position", "overlay", p.ToString());
+                System.Windows.Point p = overlayWindow.GetPosition();
+                ini.WriteValue("Position", "overlay", p.Y + "," + p.X);
+                System.Diagnostics.Debug.WriteLine(p.Y + "," + p.X);
             }
         }
 
@@ -429,7 +444,7 @@ namespace MicControl
             //System.Windows.Point p = this.PointToScreen(new System.Windows.Point(0,0));
             overlayWindow.SetPosition(p);
             overlayWindow.SetSize(32);
-            ini.WriteValue("Position", "overlay", p.ToString());
+            ini.WriteValue("Position", "overlay", p.Y + "," + p.X);
         }
 
 
@@ -564,7 +579,7 @@ namespace MicControl
 
         private void ShowOverlay(bool isEnable)
         {
-            Console.WriteLine("in "+ ((ToolStripMenuItem)tray.ContextMenuStrip.Items.Find("trayMenu_OverlayToggle", true)[0]).Checked);
+            //Console.WriteLine("in "+ ((ToolStripMenuItem)tray.ContextMenuStrip.Items.Find("trayMenu_OverlayToggle", true)[0]).Checked);
             if (isEnable)
             {
                 Radio_OverlayOn.IsChecked = true;
@@ -583,7 +598,7 @@ namespace MicControl
                 Button_OverrayReset.IsEnabled = false;
                 ini.WriteValue("action_mode", "overlay", "false");
             }
-            Console.WriteLine("out " + ((ToolStripMenuItem)tray.ContextMenuStrip.Items.Find("trayMenu_OverlayToggle", true)[0]).Checked);
+            //Console.WriteLine("out " + ((ToolStripMenuItem)tray.ContextMenuStrip.Items.Find("trayMenu_OverlayToggle", true)[0]).Checked);
         }
 
         private void GamingMode(bool isEnable)
@@ -624,6 +639,7 @@ namespace MicControl
             }
             catch ( Exception e )
             {
+                System.Diagnostics.Debug.WriteLine(e);
                 return;
             }
             HotkeyDispose();

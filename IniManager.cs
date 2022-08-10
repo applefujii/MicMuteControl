@@ -70,6 +70,7 @@ namespace MicControl
 
             }catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine(e);
                 return 0;
             }
         }
@@ -97,6 +98,7 @@ namespace MicControl
                             if (Regex.Match(this.section[i], "(?<=[\r\n(\r\n)]" + key + "=)[^#\r\n]*").Success == true)
                             {
                                 this.section[i] = Regex.Replace(this.section[i], "(?<=[\r\n(\r\n)]" + key + "=)[^#\r\n]*", value);
+                                System.Diagnostics.Debug.WriteLine("[ini] " + key + ":" + value);
                             } else
                             {
                                 this.section[i] += key + "=" + value + "\n";

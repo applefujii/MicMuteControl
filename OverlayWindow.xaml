@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MicControl"
         mc:Ignorable="d"
-        Title="OverlayWindow" Height="30" Width="30" WindowStyle="None" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True" Background="Transparent" ResizeMode="NoResize" IsTabStop="False" Focusable="False" ShowActivated="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" MouseDoubleClick="DoubleClick_HiddenShortTime">
+        Title="OverlayWindow" Height="30" Width="30" WindowStyle="None" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True" Background="Transparent" ResizeMode="NoResize" IsTabStop="False" Focusable="False" ShowActivated="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" MouseDoubleClick="DoubleClick_HiddenShortTime" MouseLeftButtonDown="MouseLeftButtonDown_DragStart">
     <Grid x:Name="MainGrid" Background="Transparent">
         <Image x:Name="MicStateImage" HorizontalAlignment="Left"/>
     </Grid>
