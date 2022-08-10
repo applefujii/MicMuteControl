@@ -11,21 +11,29 @@
             <FlowDocument>
                 <Paragraph LineHeight="6">
                     <Run Text="【"/>
+                    <Run Text=" "/>
                     <Run Text="バージョン"/>
+                    <Run Text=" "/>
                     <Run Text="】"/>
                 </Paragraph>
                 <Paragraph LineHeight="6">
-                    <Run Text="1.0.0"/>
+                    <Run Text="1.0."/>
+                    <Run Text="1"/>
                 </Paragraph>
                 <Paragraph LineHeight="6">
-                    <Run Text="updated by 2021/06/09"/>
+                    <Run Text="updated by 2021/0"/>
+                    <Run Text="8"/>
+                    <Run Text="/"/>
+                    <Run Text="10"/>
                 </Paragraph>
                 <Paragraph LineHeight="6">
                     <Run Text="released by 2021/06/09"/>
                 </Paragraph>
                 <Paragraph LineHeight="6">
                     <Run Text="【"/>
+                    <Run Text=" "/>
                     <Run Text="ホームページ"/>
+                    <Run Text=" "/>
                     <Run Text="】"/>
                 </Paragraph>
                 <Paragraph LineHeight="6">
